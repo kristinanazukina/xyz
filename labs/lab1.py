@@ -1,9 +1,9 @@
-import math
-def task1():
-   x=input(float("введи знач:"))
-   y=input(float("введи знач:"))
-   z=input(float("введи знач:"))
-   a=(sqrt(abs(x**3/2)) - math.cos(y))/(1+2*x+math.log(y))
-   b=sqrt(x**2/3)-math.cos(y)+z+math.log(y)
-print('a=',a)
-print('b=',b)
+from math import *
+x = float(input("Введите значение переменной x "))
+y = float(input("Введите значение переменной y "))
+z = float(input("Введите значение переменной z "))
+a=(sqrt(abs(x**3/2))-cos(y))/(1+2*x+log(y))
+b=sqrt(x**2/3)-cos(y)+ z+ log(y)
+print("Значение a = ", a, "Значение b = ", b)
+
+
