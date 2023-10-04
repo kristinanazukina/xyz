@@ -36,11 +36,11 @@ def task4():
     beta = radians(60)
 
     s = (a + a + a) / 2  # Полупериметр
-    R = (a * a * a) / (4 * sqrt(s * (s - a) * (s - a) * (s - a)))
+    r = (a * a * a) / (4 * sqrt(s * (s - a) * (s - a) * (s - a)))
 
     # вычисляем длины высот
-    h_alpha = (2 * R * sin(alpha))
-    h_beta = (2 * R * sin(beta))
+    h_alpha = (2 * r * sin(alpha))
+    h_beta = (2 * r * sin(beta))
 
     # Вычисляем произведение высот
     abc = h_alpha * h_beta
