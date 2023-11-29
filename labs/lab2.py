@@ -28,8 +28,37 @@ def task1():
         except ValueError:
             print("Некорректный ввод. пожалуйста,введите целое число")
 
+from math import *
+import matplotlib.pyplot as plt
 
 def task2():
+    a = int(input('Введите начало диапазона: '))
+    b = int(input('Введите конец диапазона: '))
+    x_znach = []
+    y_znach = []
+
+    def func(a, b):
+        x = a
+        while x <= b+0.00001:
+            if x >= 0:
+                result_1 = cos(pi*x)
+                y_znach.append(result_1)
+            if x < 0:
+                result_2 = x**2 +1
+                y_znach.append(result_2)
+            x_znach.append(x)
+            x += 1
+        return x_znach, y_znach
+    print(func(a, b))
+    plt.plot(x_znach, y_znach)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('График функции')
+    plt.grid(True)
+    plt.show()
+
+
+def task3():
     def number_in_new_numeral_system(number, base):
         if base < 2 or base > 16:  # Проверяем, что выбранное основание находится в допустимом диапазоне
             return "Ошибка: Недопустимое основание системы счисления"
