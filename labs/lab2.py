@@ -78,19 +78,20 @@ def task5():
         if len(str(number)) == 3 and number % 2 == 0 and sum_of_digits(number) > m:
             print(number)
 
- def task6():
-     def is_happy(number):
-         pass
-     bilet = int(input("введи номера билета="))
-     a1=3
-     a2=8
-     a3=1
-     a4=3
-     a5=0
-     a6=9
-     if a1+a2+a3 == a4+a5+a6:
-         print('билет счастливый')
-     else:
-         print("билет несчастливый")
+def task6():
+    def is_happy():
+        bilet = int(input("введи номера билета="))
+        bilet = str(bilet)
+        a1 = int(bilet[0])
+        a2 = int(bilet[1])
+        a3 = int(bilet[2])
+        a4 = int(bilet[3])
+        a5 = int(bilet[4])
+        a6 = int(bilet[5])
+        if a1 + a2 + a3 == a4 + a5 + a6:
+            print('билет счастливый')
+        else:
+            print("билет несчастливый")
+    is_happy()
 
 
