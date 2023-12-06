@@ -123,4 +123,17 @@ def task6():
             print("билет несчастливый")
     is_happy()
 
+def task8():
+    def calculate_sum(epsilon):
+        term = 1
+        sum = term
+        n = 1
+        while abs(term) > epsilon:
+            term = (-1) ** n * (1 - n)
+            sum += term
+            n += 1
+        return sum
 
+    epsilon = 0.0001
+    result = calculate_sum(epsilon)
+    print(f"сумма членов ряда с точностью до {epsilon} равна: {result}")
