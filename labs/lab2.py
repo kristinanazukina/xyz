@@ -153,16 +153,3 @@ def task8():
     print(f"сумма членов ряда с точностью до {epsilon} равна: {result}")
 import matplotlib.pyplot as plt
 
-def task4():
-    x1=[-7,-6,-2,-4,1,-7]
-    y1=[5,-4,-6,0,4,5]
-    axes=plt.subplot()
-    axes.plot(x1,y1,color='black')
-    axes.set_aspect(1)
-
-    x2=[1,1,3,5,6,3,1]
-    y2=[-7,-2,-1, 2,-3,-4,-7]
-    axes.plot(x2, y2, color='black')
-    plt.grid()
-    plt.title('Task 4')
-    plt.show()
