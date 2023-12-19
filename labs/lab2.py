@@ -137,7 +137,7 @@ def task6():
             print("билет несчастливый")
     is_happy()
 
-def task8():
+def task7():
     def calculate_sum(epsilon):
         term = 1
         sum = term
@@ -152,4 +152,33 @@ def task8():
     result = calculate_sum(epsilon)
     print(f"сумма членов ряда с точностью до {epsilon} равна: {result}")
 import matplotlib.pyplot as plt
+
+def task8():
+   s1 = 0 
+    for i in range(1,9): 
+    for j in range(1, i): 
+        s1 += j ** (2 + i) 
+print("1)", s1) 
+ 
+s2 = 0 
+p2 = 1 
+for i in range(1,9): 
+    for j in range(1,4): 
+        p2 *= (j + i) 
+    s2 += p2 
+    p2 = 1 
+print("2)", s2) 
+ 
+p3 = 1 
+s3_1 = 0 
+s3_2 = 0 
+for i in range(1,9): 
+    for j in range(i, (2*i - 1) + 1): 
+        for k in range(1, 5): 
+            s3_2 += 2*j + 3*i - 0.5*k 
+        s3_1 += s3_2 
+        s3_2 = 0 
+    p3 *= s3_1 
+    s3_1 = 0 
+print("3)", p3)
 
