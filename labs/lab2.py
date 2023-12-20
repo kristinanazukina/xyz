@@ -182,3 +182,18 @@ for i in range(1,9):
     s3_1 = 0 
 print("3)", p3)
 
+from math import *
+def task9():
+    x=float(input('введи х:'))
+    eps=float(input("введите погрешность:"))
+
+    i=1
+    sum=0
+    print("аналитическое значение:",round(atan(x),4))
+
+    while (abs(atan(x)-sum)> eps):
+        sum += ((-1)**(i))*1/((2*i+1)*(x**(2*i+1)))
+        i+=1
+        print(i)
+
+    print("Вычисленное значение",round(sum,4))
