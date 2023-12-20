@@ -154,33 +154,33 @@ def task7():
 import matplotlib.pyplot as plt
 
 def task8():
-   s1 = 0 
+    s1 = 0 
     for i in range(1,9): 
-    for j in range(1, i): 
-        s1 += j ** (2 + i) 
-print("1)", s1) 
+        for j in range(1, i): 
+            s1 += j ** (2 + i) 
+    print("1)", s1) 
  
-s2 = 0 
-p2 = 1 
-for i in range(1,9): 
-    for j in range(1,4): 
-        p2 *= (j + i) 
-    s2 += p2 
+    s2 = 0 
     p2 = 1 
-print("2)", s2) 
+    for i in range(1,9): 
+        for j in range(1,4): 
+            p2 *= (j + i) 
+        s2 += p2 
+        p2 = 1 
+    print("2)", s2) 
  
-p3 = 1 
-s3_1 = 0 
-s3_2 = 0 
-for i in range(1,9): 
-    for j in range(i, (2*i - 1) + 1): 
-        for k in range(1, 5): 
-            s3_2 += 2*j + 3*i - 0.5*k 
-        s3_1 += s3_2 
-        s3_2 = 0 
-    p3 *= s3_1 
+    p3 = 1 
     s3_1 = 0 
-print("3)", p3)
+    s3_2 = 0 
+    for i in range(1,9): 
+        for j in range(i, (2*i - 1) + 1): 
+            for k in range(1, 5): 
+                s3_2 += 2*j + 3*i - 0.5*k 
+            s3_1 += s3_2 
+            s3_2 = 0 
+        p3 *= s3_1 
+        s3_1 = 0 
+    print("3)", p3)
 
 from math import *
 def task9():
