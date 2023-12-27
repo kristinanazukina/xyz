@@ -31,64 +31,52 @@ def task1():
 from math import *
 import matplotlib.pyplot as plt
 
+def chet(n):
+    if n % 2 == 0:
+        return True
+    else:
+        return False
+def cub(n):
+    if int(n**(1/3)) ** 3 == n:
+        return True
+    else:
+        return False
+
 def task2():
-    a = int(input('Введите начало диапазона: '))
-    b = int(input('Введите конец диапазона: '))
-    x_znach = []
-    y_znach = []
+    while True:
+        n = float(input("Введите число "))
+        if chet(n):
+            print(f"{n} оканчивается на чётную цифру")
+        else:
+            print(f"{n} не оканчивается на чётную цифру")
+        if cub(n):
+            print(f"{n}куб целого числа")
+        else:
+            print(f"{n} не куб целого числа")
 
-    def func(a, b):
-        x = a
-        while x <= b+0.00001:
-            if x >= 0:
-                result_1 = cos(pi*x)
-                y_znach.append(result_1)
-            if x < 0:
-                result_2 = x**2 +1
-                y_znach.append(result_2)
-            x_znach.append(x)
-            x += 1
-        return x_znach, y_znach
-    print(func(a, b))
-    plt.plot(x_znach, y_znach)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title('График функции')
-    plt.grid(True)
-    plt.show()
-
+def decimal_in_new_numeral_system(number,base):
+    result = ''
+    intp = int(number)
+    frp = number - intp
+    while intp > 0:
+        r = intp % base
+        result = str(r) + result
+        intp = intp // base
+    result += '.'
+    pr = 4
+    while frp > 0 and pr > 0:
+        frp *= base
+        digit = int(frp)
+        result += str(digit)
+        frp -= digit
+        pr -= 1
+    return result
 
 def task3():
-    def number_in_new_numeral_system(number, base):
-        if base < 2 or base > 16:  # Проверяем, что выбранное основание находится в допустимом диапазоне
-            return "Ошибка: Недопустимое основание системы счисления"
-
-        if number == 0:
-            digits = "0123456789ABCDEF"  # Цифры, используемые в различных системах счисления
-
-            result = ""
-            negative = False
-        if number < 0:  # Проверяем, является ли число отрицательным
-            negative = True
-        number = abs(number)
-
-        while number > 0:
-            remainder = number % base  # Остаток от деления числа на основание новой системы счисления
-        result = digits[remainder] + result
-        number = number // base  # Целая часть от деления числа на основание новой системы счисления
-
-        if negative:
-            result = "-" + result  # Если число было отрицательным, то добавляем знак "-" к результату
-
-        return result
-
-    # Пример использования функции
-    number = int(input("Введите число в десятичной системе счисления: "))
-    base = int(input("Введите основание новой системы счисления: "))
-    result = number_in_new_numeral_system(number, base)
-    print(f"Число {number} в системе счисления с основанием {base} равно {result}")
-
-    return "0"  # Если число равно нулю, то возвращаем строку "0"
+    number = float(input("Введите десятичное число: "))
+    base = int(input("Введите систему счисления: "))
+    result = decimal_in_new_numeral_system(number,base)
+    print(f"Результат: {result}")
 
 def task4():
     x1=[-7,-6,-2,-4,1,-7]
