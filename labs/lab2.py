@@ -1,36 +1,3 @@
-def task1():
-    def chet(num):
-        last_digit = int(str(num)[-1])
-        return last_digit % 2 == 0
-
-    def is_cube(num):
-        root = num ** (1 / 3)
-        return round(root) ** 3 == num
-
-    while True:
-        user_input = input("введи число( или 'выход'для завершения программмы):")
-        if user_input.lower() == "выход":
-            break
-
-        try:
-            number = int(user_input)
-
-            if chet(number):
-                print("число оканчивается на четную цифру")
-            else:
-                print("число не оканчивается на четную цифру")
-
-            if is_cube(number):
-                print("число является кубом целого числа")
-            else:
-                print("число не является кубом целого числа")
-
-        except ValueError:
-            print("Некорректный ввод. пожалуйста,введите целое число")
-
-from math import *
-import matplotlib.pyplot as plt
-
 def chet(n):
     if n % 2 == 0:
         return True
@@ -42,7 +9,7 @@ def cub(n):
     else:
         return False
 
-def task2():
+def task1():
     while True:
         n = float(input("Введите число "))
         if chet(n):
@@ -53,6 +20,28 @@ def task2():
             print(f"{n}куб целого числа")
         else:
             print(f"{n} не куб целого числа")
+
+from math import *
+import matplotlib.pyplot as plt
+
+def f(x):
+    if x >= 0:
+        return exp(x) + x
+    if x < 0:
+        return sin(x) + 1
+def task2():
+    i = -3
+    while i < 5:
+        i +=0.05
+        y = f(i)
+        print(round(y,4))
+    plt.plot(x_znach, y_znach)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('График функции')
+    plt.grid(True)
+    plt.show()
+
 
 def decimal_in_new_numeral_system(number,base):
     result = ''
