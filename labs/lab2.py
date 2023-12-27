@@ -25,10 +25,10 @@ from math import *
 import matplotlib.pyplot as plt
 
 def f(x):
-    if x >= 0:
-        return exp(x) + x
-    if x < 0:
-        return sin(x) + 1
+    if x > 0:
+        return x**2 + 1
+    if x <= 0:
+        return cos(pi*x)
 def task2():
     i = -3
     while i < 5:
