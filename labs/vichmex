@@ -1,52 +1,85 @@
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
-q1 = 100
-q2 = 500
-q3 = 1000
-E1 = 10/10**11
-E2 = 25/10**11
-E3 = 50/10**11
+n = 48
+q = 20000
+q1 = 10000
+q2 = 30000
+E1 = 20 * 10 ** 10
+E2 = 30 * 10 ** 10
+E3 = 50 * 10 ** 10
 
-p1 = 700
-p2 = 800
-p3 = 900
-A = 10
-l = 10
-n = 5
-u0 = 0.01
+p1 = 8000
+p2 = 5000
+p3 = 6000
+
+L = 6
+u0 = 0.001
 g = 9.81
 
+def delta(x):
+    eps = 1e-6
+    if abs(x - L / 3) < eps or abs(x - L / 2) < eps:
+        return 1
+    else:
+        return 0
+
 def E(x):
-    if x <= l/3:
+    if x <= L / 3:
         return E1
-    elif x >= 2 * l/3:
+    elif x >= 2 * L / 3:
         return E3
     else:
         return E2
 
 def p(x):
-    if x <= l / 3:
+    if x <= L / 3:
         return p1
-    elif x >= 2 * l / 3:
+    elif x >= 2 * L / 3:
         return p3
     else:
         return p2
 
+h = L / n
+x = np.linspace(0, L, n + 1)
 
+K = np.zeros((n + 1, n + 1))
+F = np.zeros((n + 1, 1))
 
-x_i = np.linspace(0, l, n)
-h = l/(n-1)
-E = np.zeros(n)
-p = np.zeros(n)
-for i in range(n):
-    E[i] = E(x_i[i])
-    p[i] = p(x_i[i])
-F = np.zeros((n+1, n+1))
-K = np.zeros((n+1,1))
+K[0, 0] = 1
+K[n, n - 1] = -E(x[n]) / h
+K[n, n] = E(x[n]) / h
+
+F[0, 0] = -u0
+F[n, 0] = q
+
 for i in range(1, n):
-    F[i][i-1] = (A * E[i])/h**2
-    F[i][i] = (-A * E[i] - A * E[i-1]) / h ** 2
-    F[i][i+1] = (A * E[i])/h**2
-    K[i][0] = -p(x_i[i]) * g
-  
+    K[i, i - 1] = E(x[i]) / h ** 2
+    K[i, i] = (-E(x[i + 1]) - E(x[i])) / h ** 2
+    K[i, i + 1] = E(x[i + 1]) / h ** 2
+    F[i, 0] = p(x[i]) * g - q1 * delta(x[i]) / h - q2 * delta(x[i]) / h
+
+u = np.linalg.solve(K, F).flatten()
+
+sigma = np.zeros(n + 1)
+for i in range(n):
+    sigma[i] = E(x[i]) * (u[i + 1] - u[i]) / h
+sigma[n] = sigma[n - 1]
+
+norm = np.sqrt(np.sum(u ** 2) * h)
+print(f"n = {n}")
+print(f"Гильбертова норма перемещений = {norm:.6e}")
+
+plt.title(f"Перемещения (n = {n})")
+plt.ylabel("Перемещения u (м)")
+plt.xlabel("Длина стержня L (м)")
+plt.grid(True)
+plt.plot(x, u, marker='o', color='tab:pink')
+plt.show()
+
+plt.title(f"Напряжения (n = {n})")
+plt.xlabel("Длина стержня L (м)")
+plt.ylabel("Напряжения (Па)")
+plt.grid(True)
+plt.plot(x, sigma, marker='o', color='blue')
+plt.show()
