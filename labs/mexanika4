@@ -1,0 +1,130 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.integrate as spi
+
+
+
+q = 200000
+q1 = 100000
+q2 = 300000
+E1 = 20 * 10 ** 10
+E2 = 20 * 10 ** 10
+E3 = 20 * 10 ** 10
+
+p1 = 8000
+p2 = 8000
+p3 = 8000
+
+L = 6
+u0 = -0.001
+g = -9.81
+
+
+# def hevi(x,x0):
+#     eps = 1e-8
+#     if x>=x0-eps:
+#         return 1
+#     else:
+#         return 0
+
+def delta(x,x0):
+    eps = 1e-6
+    if abs(x - x0) < eps:
+        return 1
+    else:
+        return 0
+
+def E(x):
+    if x <= L / 3:
+        return E1
+    elif x >= 2 * L / 3:
+        return E3
+    else:
+        return E2
+
+def Er(x):
+    return 1/(E(x))
+
+
+def p(x):
+    if x <= L / 3:
+        return p1
+    elif x >= 2 * L / 3:
+        return p3
+    else:
+        return p2
+
+n_values = [6,192]
+
+for n in n_values:
+    h = L / n
+    x = np.linspace(0, L, n + 1)
+    Kg = np.zeros((n + 1, n + 1))
+    Fg = np.zeros((n + 1, 1))
+    a = np.zeros(n)
+    two = np.zeros((n, 2))
+    B = np.zeros((1, 2))
+
+
+    for i in range(n):
+        two[i, 0] = i
+        two[i, 1] = i + 1
+    for i in range(0, n):
+        B[0, 0] = -1 / h
+        B[0, 1] = 1 / h
+        Ke=np.transpose(B)@B*spi.quad(E,x[i],x[i+1])[0]
+        feg = [[p(x[i])*g*h/2],
+               [p(x[i+1])*g*h/2]]
+        feq = [[q1*delta(x[i],L/3) / 2 + q2*delta(x[i],L/2) / 2 + q*delta(x[i],L)],
+               [q1*delta(x[i+1],L/3) / 2 + q2*delta(x[i+1],L/2) / 2 + q*delta(x[i+1],L)]]
+        Fe=np.array(feg) + np.array(feq)
+
+        for j in range(2):
+            for k in range(2):
+                Kg[int(two[i,j]),int(two[i,k])]=Kg[int(two[i,j]),int(two[i,k])]+Ke[j,k]
+            Fg[int(two[i, j]), 0] = Fg[int(two[i, j]), 0] + Fe[j,0]
+
+    Kg[0,0]=Kg[0,0]*1e+10
+    Fg[0, 0] =u0*Kg[0,0]
+
+    u = np.linalg.solve(Kg, Fg).flatten()
+
+    plt.figure(1)
+    plt.title(f"Перемещения (n = {n})")
+    plt.ylabel("Перемещения u (м)")
+    plt.xlabel("Длина стержня L (м)")
+    plt.grid(True)
+    plt.plot(x, u,color='tab:pink')
+
+    sigma = np.zeros(n + 1)
+    ch = np.zeros(n + 1)
+
+    for i in range(n):
+        ue = np.zeros((2, 1))
+        ue[0,0]=u[int(two[i,0])]
+        ue[1,0]=u[int(two[i,1])]
+        B[0, 0] = -1 / h
+        B[0, 1] = 1 / h
+        sigmaE=E(x[i]/2+x[i+1]/2)*B@ue
+        for j in range(2):
+            sigma[int(two[i,j])]=sigma[int(two[i,j])]+sigmaE
+            ch[int(two[i, j])] = ch[int(two[i, j])] + 1
+    sigma=sigma/ch
+
+    norma=abs((sigma[n]-q)/q*100)
+    print(f"n = {n}")
+    print(f"Гильбертова норма перемещений = {norma:.6e}")
+
+
+    plt.figure(2)
+    plt.title(f"Напряжения (n = {n})")
+    plt.xlabel("Длина стержня L (м)")
+    plt.ylabel("Напряжения (Па)")
+    plt.grid(True)
+    plt.plot(x, sigma, marker='o', color='blue')
+
+plt.show()
+
+
+
+
